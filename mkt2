@@ -1,0 +1,23 @@
+# TARGET NAME
+TARGET := test2
+SRC := $(TARGET).c
+OBJ := $(TARGET).o
+DLSO := libdlink.so
+
+CFLAGS := -g -Wall
+LFLAGS := -lm -pthread
+CC := gcc
+
+all : $(TARGET)
+
+
+$(TARGET): $(OBJ) $(SRC)
+	$(CC) -c $(SRC)
+	$(CC) -shared display_1.c -fPIC -o $(DLSO)
+	$(CC) -o $(TARGET) $(SRC) -L. -ldlink
+.c.o:
+	$(CC) -c $(SRC)
+
+clean:
+	rm -f $(TARGET) $(OBJ)
+	rm -f $(DLSO)
